@@ -6,32 +6,89 @@ import java.io.*;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) {
       //Запуск для первой задачи
         File save = new File("progress.txt");
 
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(save));
-        oos.writeObject(new Progress("Gordon", 88, 256, 4));
-        oos.close();
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(new FileOutputStream(save));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (oos != null) {
+                oos.writeObject(new Progress("Gordon", 88, 256, 4));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (oos != null) {
+                oos.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(save));
-        Progress progress = (Progress) ois.readObject();
+        ObjectInputStream ois = null;
+        try {
+            ois = new ObjectInputStream(new FileInputStream(save));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Progress progress = null;
+        try {
+            if (ois != null) {
+                progress = (Progress) ois.readObject();
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         System.out.println(progress);
-        ois.close();
+        try {
+            if (ois != null) {
+                ois.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // работа с файлом
         File file = new File((String) null);
 
-        BufferedReader pic = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+        BufferedReader pic = null;
+        try {
+            pic = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         File picture = new File(String.valueOf(pic));
 
-        FileOutputStream newPicture = new FileOutputStream(picture, false);
+        FileOutputStream newPicture = null;
+        try {
+            newPicture = new FileOutputStream(picture, false);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-            byte[] myBytes = "New Picture\n".getBytes();
+        byte[] myBytes = "New Picture\n".getBytes();
 
-               newPicture.write(myBytes);
+        try {
+            if (newPicture != null) {
+                newPicture.write(myBytes);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-               newPicture.close();
+        try {
+            if (newPicture != null) {
+                newPicture.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         System.out.println(newPicture);
     }
