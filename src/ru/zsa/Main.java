@@ -25,7 +25,6 @@ public class Main {
 
         // работа с файлом
         File file = new File((String) null);
-
         try (BufferedReader pic = new BufferedReader(new InputStreamReader(new FileInputStream(file)))){
             File picture = new File(String.valueOf(pic));
             FileOutputStream newPicture = new FileOutputStream(picture, false);
